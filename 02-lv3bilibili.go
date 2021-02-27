@@ -28,11 +28,17 @@ func (mouse *video)makecet()  {				//video实现收藏方法
 	mouse.cet++
 }
 
+func (mouse *video)all()  {					//一键三连
+	mouse.good++
+	mouse.coin++
+	mouse.cet++
+}
+
 func main()  {
 	 LOS := &video{100,20,50}		//一个叫LOS 的视频原来有100个赞，20个币，50个收藏
 	var i mouse					//一个名为i的鼠标接口
 	i = LOS						//
-	i.makegood()				//给我点个赞
+	i.makegood()				//点个赞
 	fmt.Println("los = ",LOS)//验证实现了点赞
 
 }
