@@ -1,0 +1,37 @@
+package main
+
+import "fmt"
+
+type person struct {
+	name string//名字
+	age  int//年龄
+}
+
+type dove interface {
+	gugugu()
+}
+
+type repeater interface {
+	repeat(string) // 复读
+}
+
+func (per *person) gugugu() {
+	fmt.Println(per.name, "又鸽了")
+}
+
+func (per *person)repeat(word string)  {
+	fmt.Println(word)
+}
+
+
+func main()  {
+	person1:= &person{"LOS",19}
+	var i1 dove
+	var i2 repeater
+	i1 = person1
+	i1.gugugu()
+	i2 = person1
+	i2.repeat("lalala")
+	i2.repeat("lalala")
+	i2.repeat("lalala")
+}
