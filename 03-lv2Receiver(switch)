@@ -1,0 +1,22 @@
+package main
+
+import "fmt"
+
+
+type Interface interface {
+}
+
+func Receiver(ker Interface)  {
+	switch ker.(type) {
+	case int:fmt.Println("这是一个int")
+	case string:fmt.Println("这是一个string" )
+	case float32:fmt.Println("这是一个float")
+	case bool:fmt.Println("这是一个bool")
+	}
+}
+func main()  {
+	Receiver(11)
+	Receiver("stringaa")
+	Receiver(true)
+
+}
