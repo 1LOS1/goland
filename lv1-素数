@@ -1,0 +1,55 @@
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+var wg sync.WaitGroup
+//import "time"
+
+func Isprime1(x int) bool { //接受要判断的值，判断是否是素数，返回bool类型的flag
+	flag := true
+	for i := 2; i < x; i++ {
+		if x%i == 0 {
+			flag = false
+		}
+	}
+	return flag
+}
+
+func ispei(inner chan int, judge chan bool) {//协程内容，打印素数的值，并判读主函数如何关闭
+	defer wg.Done()
+	for {
+		value, ok := <-inner
+		if !ok {
+			break
+		}
+		if Isprime1(value) {
+			fmt.Println(value)
+		}
+	}
+
+
+}
+
+func main() {
+	inner := make(chan int, 5)
+	judge := make(chan bool, 1)
+
+	go func() { //创建一个协程往里面写数据
+		for m := 0; m < 50000; m++ {
+			inner <- m
+		}
+		close(inner)
+	}() //将要数送入inner(0到多少,inner)
+
+	for i := 0; i < 5; i++ { //开启i<多少个协程，并输出
+		wg.Add(1)
+		go ispei(inner, judge)
+	}
+
+
+	wg.Wait()
+	fmt.Println("finish")
+}
